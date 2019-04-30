@@ -1,0 +1,12 @@
+html {
+  font-family: "Open Sans", sans-serif;
+}
+button {
+  background-color: #4AB3F4;;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: none;
+}
