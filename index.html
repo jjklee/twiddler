@@ -9,55 +9,51 @@
     <title>Twiddler</title>
   </head>
   <body>
-
     <h1>Twiddler</h1>
-    <button id="home">Home</button>
-    <button id="refresh">See New Tweets</button>
-
-    <script>
-      $(document).ready(function(){
-        var $body = $('body');
-
-        var updateTweets = function() {
-          $("div").html('');
-          var index = streams.home.length - 1;
-          while(index >= 0){
-            var tweet = streams.home[index];
-            var $tweet = $("<br /><span></span>").addClass("mssg").text(tweet.message);
-            var $user = $("<span></span>").addClass("user").text("@" + tweet.user);
-            var $date = $("<span></span>").addClass("date").text(" • [" + moment(tweet.created_at).fromNow() + "] :");
-            var $div = $("<div></div>").addClass("tweets");
-            $div.append($user, $date, $tweet).appendTo($body)
-            index -= 1;
-          }
-        }
-
-        updateTweets();
-        $("#refresh").on("click", function() {
-          $("div").remove();
-          updateTweets();
-        });
-      
-        $('.user').on("click", function(){
-          $("div").hide();
-          $("div").removeClass("target");
-          
-          var target = $(this).text();
-          var divs = document.querySelectorAll("div")
-          for(let i = 0; i < divs.length; i++) {
-            if(divs[i].firstChild.innerHTML === target) {
-              console.log(this);
-              $(divs[i]).addClass("target");
+      <button id="home">Home</button>
+      <button id="refresh">See New Tweets</button>
+      <script>
+        $(document).ready(function(){
+          var $body = $('body');
+  
+          var updateTweets = function() {
+            var index = streams.home.length - 1;
+            while(index >= 0){
+              var tweet = streams.home[index];
+              var $tweet = $("<br /><span></span>").addClass("mssg").text(tweet.message);
+              var $user = $("<span></span>").addClass("user").text("@" + tweet.user);
+              var $date = $("<span></span>").text(" • [" + moment(tweet.created_at).fromNow() + "] :");
+              var $div = $("<div></div>").addClass("tweets");
+              $div.append($user, $date, $tweet).appendTo($body)
+              index -= 1;
             }
-          };
-          $(".target").show();
+          }
+  
+          updateTweets();
+          $("#refresh").on("click", function() {
+            $("div").remove();
+            updateTweets();
+          });
+          
+          $body.on("click", ".user", function(event){
+            $("div").hide();
+            $("div").removeClass("target");
+            
+            var target = $(this).text();
+            var divs = document.querySelectorAll("div")
+            for(let i = 0; i < divs.length; i++) {
+              if(divs[i].firstChild.innerHTML === target) {
+                $(divs[i]).addClass("target");
+              }
+            };
+            $(".target").show();
+          });
+          
+          $("#home").on("click", function() {
+            $("div").show();
+          });
+          
         });
-      
-        $("#home").on("click", function() {
-          $("div").show();
-        });
-        
-      });
-    </script>
+      </script>
   </body>
 </html>
